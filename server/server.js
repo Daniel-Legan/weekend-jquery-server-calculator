@@ -7,7 +7,7 @@ const { INSPECT_MAX_BYTES } = require('buffer');
 
 // Create an instance of express by calling the function returned above - gives us an object
 const app = express();
-const port = 3000;
+const port = 3002;
 
 // express static file serving - public is the folder name
 app.use(express.static('server/public'));
@@ -18,16 +18,61 @@ app.listen(port, () => {
     console.log('we are live!');
 });
 
-let objectsSentFromClient = [];
+let objectHistory = [];
+let objectsWithAnswers = [];
 
 app.post('/calculation', (req, res) => {
-    console.log('data from the client', req.body);
 
-    let newDataFromTheClient = req.body;
+    let newObjectFromTheClient = req.body;
 
-    objectsSentFromClient.push(newDataFromTheClient);
+    objectHistory.push(newObjectFromTheClient);
 
-    console.log('list of objectsSentFromClient', objectsSentFromClient);
+    // returns the a new object forged from the last index of objectHistory
+    let lastCalculationObject = objectToSendBackToClient();
+    // console.log(lastCalculationObject);
+    objectsWithAnswers.push(lastCalculationObject);
+    console.log(objectsWithAnswers);
+
 
     res.sendStatus(201);
 });
+
+app.get('/calculation', (req, res) => {
+    res.send(objectsWithAnswers[objectsWithAnswers.length-1]);
+});
+
+
+// look at last object in objectHistory and perform calculation based on calculationInput
+
+function objectToSendBackToClient() {
+    let lastObject = objectHistory[objectHistory.length-1];
+    // console.log('the last object of objectHistory is', lastObject);
+    if(lastObject.calculationInput === '+') {
+        return {
+            number1: lastObject.firstNumberInput,
+            number2: lastObject.secondNumberInput,
+            answer: Number(lastObject.firstNumberInput) + Number(lastObject.secondNumberInput)
+        };
+    }
+    if(lastObject.calculationInput === '-') {
+        return {
+            number1: lastObject.firstNumberInput,
+            number2: lastObject.secondNumberInput,
+            answer: Number(lastObject.firstNumberInput) - Number(lastObject.secondNumberInput)
+        };
+    }
+    if(lastObject.calculationInput === '*') {
+        return {
+            number1: lastObject.firstNumberInput,
+            number2: lastObject.secondNumberInput,
+            answer: Number(lastObject.firstNumberInput) * Number(lastObject.secondNumberInput)
+        };
+    }
+    if(lastObject.calculationInput === '/') {
+        return {
+            number1: lastObject.firstNumberInput,
+            number2: lastObject.secondNumberInput,
+            answer: Number(lastObject.firstNumberInput) / Number(lastObject.secondNumberInput)
+        };
+    }
+}
