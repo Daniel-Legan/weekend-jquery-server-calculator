@@ -3,12 +3,12 @@ console.log('in client.js');
 $(document).ready(onReady);
 
 let inputSelection;
-let solvedInputs;
+let solvedInputs = [];
 
 function onReady() {
     loadSolutions();
     $('#inputForm').on('submit', input);
-    $('.inputButton').on('click',  onClick);
+    $('.inputButton').on('click', onClick);
 }
 
 function onClick() {
@@ -49,6 +49,7 @@ function input(event) {
 }
 
 function loadSolutions() {
+    console.log('in loadSolutions');
 
     $.ajax({
         url: '/calculation',
@@ -60,21 +61,26 @@ function loadSolutions() {
             // putting the object into the solvedInputs
 
             solvedInputs = response;
-            console.log(solvedInputs);
+            // console.log(solvedInputs);
 
-            // render();
+            render();
         })
         .catch(err => {
             console.log('GET /calculation error', err);
         })
 }
 
-// function render() {
-//     $('h2').empty();
-//     // work in progress
-//     for(let item of solvedInputs) {
-//         $('h2').append(`
-//             <div>${item.number1} ${item.calc} ${item.number2} = ${item.answer}</div>
-//         `);
-//     }
-// }
+function render() {
+    console.log('in render');
+    $('h2').empty();
+    //if there isn't anything in the array, exit render function
+    if(solvedInputs.length === 0) {
+        return;
+    }
+
+    for(let item of solvedInputs) {
+        $('h2').append(`
+            <div>${item.number1} ${item.calc} ${item.number2} = ${item.answer}</div>
+        `);
+    }
+}

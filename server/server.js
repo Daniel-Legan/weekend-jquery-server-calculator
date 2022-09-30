@@ -32,9 +32,9 @@ app.post('/calculation', (req, res) => {
 
     // returns the a new object forged from the last index of objectHistory
     let lastCalculationObject = objectToSendBackToClient();
-    console.log(lastCalculationObject);
+    console.log('last object collected', lastCalculationObject);
     objectsWithAnswers.push(lastCalculationObject);
-    console.log(objectsWithAnswers);
+    console.log('array of objects to send to client', objectsWithAnswers);
 
 
     res.sendStatus(201);
