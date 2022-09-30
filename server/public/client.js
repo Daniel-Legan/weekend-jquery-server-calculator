@@ -3,36 +3,24 @@ console.log('in client.js');
 $(document).ready(onReady);
 
 function onReady() {
-    $(document).on('click', '#add', addition);
-    $(document).on('click', '#subtract', subtraction);
-    $(document).on('click', '#multiply', multiplication);
-    $(document).on('click', '#divide', division);
-    $(document).on('click', '#equals', equals);
-    $(document).on('click', '#clear', clear);
+    $('#inputForm').on('submit', input);
 }
 
-function addition() {
-    console.log('in addition');
-    let x = $(this);
-    console.log(x);
-}
+function input(event) {
+    event.preventDefault();
+    console.log('in input');
 
-function subtraction() {
-    console.log('in subtraction');
-}
 
-function multiplication() {
-    console.log('in multiplication');
-}
+    let objectToSendToServer = {
+        firstNumberInput: $('#firstNumberInput').val(),
+        secondNumberInput: $('#secondNumberInput').val(),
+        // add: $('#add').val(),
+        // subtract: $('#subtract').val(),
+        // multiply: $('#multiply').val(),
+        // divide: $('#divide').val(),
+        // need to add the calculation to send
+        // determine which input was selected
+    };
 
-function division() {
-    console.log('in division');
-}
-
-function equals() {
-    console.log('in equals');
-}
-
-function clear() {
-    console.log('in clear');
+    console.log('object to send to server', objectToSendToServer);
 }
