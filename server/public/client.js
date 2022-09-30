@@ -22,8 +22,10 @@ function onClick() {
 function input(event) {
     event.preventDefault();
     console.log('in input');
-// [ ] have array of objects come back to client
-// [ ] need conditional to determine if all inputs were entered
+// TODO:
+// [ ] put clear button into the form and have on submit, only target '=', not 'C'
+// [ ] build clear button to clear inputs' values
+// [ ] need conditional to determine if all inputs were entered, do not allow user to submit
     let objectToSendToServer = {
         firstNumberInput: $('#firstNumberInput').val(),
         secondNumberInput: $('#secondNumberInput').val(),
@@ -58,10 +60,9 @@ function loadSolutions() {
         .then(response => {
             console.log('GET /calculation', response);
 
-            // putting the object into the solvedInputs
+            // replacing solvedInputs with the response from the server
 
             solvedInputs = response;
-            // console.log(solvedInputs);
 
             render();
         })
