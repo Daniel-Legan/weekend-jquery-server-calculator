@@ -3,12 +3,12 @@ console.log('in client.js');
 $(document).ready(onReady);
 
 let inputSelection;
-let solvedInputs = [];
+let solvedInputs;
 
 function onReady() {
+    loadSolutions();
     $('#inputForm').on('submit', input);
     $('.inputButton').on('click',  onClick);
-
 }
 
 function onClick() {
@@ -22,7 +22,7 @@ function onClick() {
 function input(event) {
     event.preventDefault();
     console.log('in input');
-
+// [ ] have array of objects come back to client
 // [ ] need conditional to determine if all inputs were entered
     let objectToSendToServer = {
         firstNumberInput: $('#firstNumberInput').val(),
@@ -56,8 +56,11 @@ function loadSolutions() {
     })
         .then(response => {
             console.log('GET /calculation', response);
-            // solvedInputs.push(response);
+
             // putting the object into the solvedInputs
+
+            solvedInputs = response;
+            console.log(solvedInputs);
 
             // render();
         })
@@ -71,7 +74,7 @@ function loadSolutions() {
 //     // work in progress
 //     for(let item of solvedInputs) {
 //         $('h2').append(`
-//             <div>${item}</div>
+//             <div>${item.number1} ${item.calc} ${item.number2} = ${item.answer}</div>
 //         `);
 //     }
 // }

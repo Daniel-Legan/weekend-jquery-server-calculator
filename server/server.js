@@ -18,7 +18,10 @@ app.listen(port, () => {
     console.log('we are live!');
 });
 
+// inputs from client
 let objectHistory = [];
+
+// objects created within server with inputs from client
 let objectsWithAnswers = [];
 
 app.post('/calculation', (req, res) => {
@@ -29,7 +32,7 @@ app.post('/calculation', (req, res) => {
 
     // returns the a new object forged from the last index of objectHistory
     let lastCalculationObject = objectToSendBackToClient();
-    // console.log(lastCalculationObject);
+    console.log(lastCalculationObject);
     objectsWithAnswers.push(lastCalculationObject);
     console.log(objectsWithAnswers);
 
@@ -38,7 +41,7 @@ app.post('/calculation', (req, res) => {
 });
 
 app.get('/calculation', (req, res) => {
-    res.send(objectsWithAnswers[objectsWithAnswers.length-1]);
+    res.send(objectsWithAnswers);
 });
 
 
@@ -46,11 +49,12 @@ app.get('/calculation', (req, res) => {
 
 function objectToSendBackToClient() {
     let lastObject = objectHistory[objectHistory.length-1];
-    // console.log('the last object of objectHistory is', lastObject);
+    console.log('the last object of objectHistory is', lastObject);
     if(lastObject.calculationInput === '+') {
         return {
             number1: lastObject.firstNumberInput,
             number2: lastObject.secondNumberInput,
+            calc: '+',
             answer: Number(lastObject.firstNumberInput) + Number(lastObject.secondNumberInput)
         };
     }
@@ -58,6 +62,7 @@ function objectToSendBackToClient() {
         return {
             number1: lastObject.firstNumberInput,
             number2: lastObject.secondNumberInput,
+            calc: '-',
             answer: Number(lastObject.firstNumberInput) - Number(lastObject.secondNumberInput)
         };
     }
@@ -65,6 +70,7 @@ function objectToSendBackToClient() {
         return {
             number1: lastObject.firstNumberInput,
             number2: lastObject.secondNumberInput,
+            calc: '*',
             answer: Number(lastObject.firstNumberInput) * Number(lastObject.secondNumberInput)
         };
     }
@@ -72,6 +78,7 @@ function objectToSendBackToClient() {
         return {
             number1: lastObject.firstNumberInput,
             number2: lastObject.secondNumberInput,
+            calc: '/',
             answer: Number(lastObject.firstNumberInput) / Number(lastObject.secondNumberInput)
         };
     }
