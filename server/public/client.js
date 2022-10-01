@@ -2,13 +2,14 @@ console.log('in client.js');
 
 $(document).ready(onReady);
 
-let inputSelection;
+let inputSelection = 0;
 let solvedInputs = [];
 
 function onReady() {
     loadSolutions();
     $('#inputForm').on('submit', input);
     $('.inputButton').on('click', onClick);
+    $(document).on('click', '#clear', clearInputs);
 }
 
 function onClick() {
@@ -22,10 +23,11 @@ function onClick() {
 function input(event) {
     event.preventDefault();
     console.log('in input');
-// TODO:
-// [ ] put clear button into the form and have on submit, only target '=', not 'C'
-// [ ] build clear button to clear inputs' values
-// [ ] need conditional to determine if all inputs were entered, do not allow user to submit
+
+    if(inputSelection === 0) {
+        return;
+    }
+
     let objectToSendToServer = {
         firstNumberInput: $('#firstNumberInput').val(),
         secondNumberInput: $('#secondNumberInput').val(),
@@ -74,14 +76,28 @@ function loadSolutions() {
 function render() {
     console.log('in render');
     $('h2').empty();
-    //if there isn't anything in the array, exit render function
+    // if there isn't anything in the array, exit render function
     if(solvedInputs.length === 0) {
         return;
     }
 
+    // look at last object's answer in solvedInputs array
+    $('#answer').text(`${solvedInputs[solvedInputs.length-1].answer}`);
+
     for(let item of solvedInputs) {
         $('h2').append(`
-            <div>${item.number1} ${item.calc} ${item.number2} = ${item.answer}</div>
+            <div>
+            ${item.number1} ${item.calc} ${item.number2} = ${item.answer}
+            </div>
         `);
     }
+}
+
+function clearInputs() {
+    console.log('in clearInputs');
+    console.log(this);
+    $('#firstNumberInput').val('');
+    $('#secondNumberInput').val('');
+
+    inputSelection = 0;
 }

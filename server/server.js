@@ -30,7 +30,7 @@ app.post('/calculation', (req, res) => {
 
     objectHistory.push(newObjectFromTheClient);
 
-    // returns the a new object forged from the last index of objectHistory
+    // returns the a new object created from the last index of objectHistory
     let lastCalculationObject = objectToSendBackToClient();
     console.log('last object collected', lastCalculationObject);
     objectsWithAnswers.push(lastCalculationObject);
