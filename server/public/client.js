@@ -92,9 +92,9 @@ function render() {
 
     for(let item of solvedInputs) {
         $('h2').append(`
-            <div>
+            <li>
             ${item.number1} ${item.calc} ${item.number2} = ${item.answer}
-            </div>
+            </li>
         `);
     }
 }
