@@ -19,6 +19,7 @@ function onClick() {
     console.log(whatIsThis.val());
 
     $('.inputButton').removeClass('red');
+    $('.inputButton').removeClass('pulse');
     $(whatIsThis).addClass('red');
 
     inputSelection = whatIsThis.val();
@@ -29,7 +30,7 @@ function input(event) {
     console.log('in input');
 
     if(inputSelection === 0) {
-        alert('Select a math operation to continue.');
+        $('.inputButton').addClass('pulse');
         return;
     }
 

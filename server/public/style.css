@@ -1,3 +1,16 @@
 .red {
     background-color: red;
 }
+
+/* Stack Overflow */
+/* https://stackoverflow.com/a/17260204 */
+@keyframes border-pulse {
+    50% {
+        border-color: rgba(255, 255, 255, 0);
+    }
+}
+
+.pulse {
+    border: solid 2px yellowgreen;
+    animation: border-pulse 1s infinite;
+}
