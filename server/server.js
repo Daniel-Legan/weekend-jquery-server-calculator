@@ -1,11 +1,11 @@
 console.log('in server.js');
 
-// Require express - gives us a function
+// require express - gives us a function
 const express = require('express');
 const bodyParser = require('body-parser');
 const { INSPECT_MAX_BYTES } = require('buffer');
 
-// Create an instance of express by calling the function returned above - gives us an object
+// create an instance of express by calling the function returned above - gives us an object
 const app = express();
 const port = 3002;
 
@@ -13,7 +13,7 @@ const port = 3002;
 app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Start up our server
+// start up our server
 app.listen(port, () => {
     console.log('we are live!');
 });

@@ -15,8 +15,12 @@ function onReady() {
 function onClick() {
     console.log('in onClick');
     let whatIsThis = $(this);
-    console.log(whatIsThis);
+
     console.log(whatIsThis.val());
+
+    $('.inputButton').removeClass('red');
+    $(whatIsThis).addClass('red');
+
     inputSelection = whatIsThis.val();
 }
 
@@ -25,6 +29,7 @@ function input(event) {
     console.log('in input');
 
     if(inputSelection === 0) {
+        alert('Select a math operation to continue.');
         return;
     }
 
@@ -98,6 +103,7 @@ function clearInputs() {
     console.log(this);
     $('#firstNumberInput').val('');
     $('#secondNumberInput').val('');
+    $('.inputButton').removeClass('red');
 
     inputSelection = 0;
 }
